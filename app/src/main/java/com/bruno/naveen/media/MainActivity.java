@@ -80,7 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bpause.setOnClickListener(MainActivity.this);
         //MEDIA INTERFFACES
         mc=new MediaController(MainActivity.this);
-        mp=MediaPlayer.create(this,R.raw.birds);
+        //mp=MediaPlayer.create(this,R.raw.birds);
+        //ANOTHER METHOD FOR ABOVE LINE (IN CASE WE WANT TO ACCESS FILE USING NAME)*********************************************IMP***********************
+        mp=MediaPlayer.create(this,getResources().getIdentifier("birds","raw",getPackageName()));
+
         am=(AudioManager) getSystemService(AUDIO_SERVICE);//FOR CONTROLLING AUDIO
 
         //SETTING SEEK VALUES
