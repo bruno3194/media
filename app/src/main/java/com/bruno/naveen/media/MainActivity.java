@@ -23,7 +23,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MediaController mc;
     private MediaPlayer mp;
     private SeekBar sk,seek;
+    private AudioManager am;
+    private int max1;
+    private Timer timer;
 
+    //FOR CLOSINF TIMER(WHICH IS HEAVY)
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
        timer.cancel();
@@ -31,10 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private AudioManager am;
-    private Timer timer;
-    private int max1;
-
+    //SEEKING AUDIO
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         max1=mp.getDuration();
@@ -65,24 +66,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        //INTIALIZES..
         v1=(VideoView)findViewById(R.id.videoView);
         b1=(Button)findViewById(R.id.button);
-        mc=new MediaController(MainActivity.this);
         bplay=findViewById(R.id.btnplay);
         bpause=findViewById(R.id.btnpause);
+        sk=findViewById(R.id.seek);
+        seek=findViewById(R.id.seek2);
+
+        //BUTTONS ON CLICKS..
         b1.setOnClickListener(MainActivity.this);
         bplay.setOnClickListener(MainActivity.this);
         bpause.setOnClickListener(MainActivity.this);
+        //MEDIA INTERFFACES
+        mc=new MediaController(MainActivity.this);
         mp=MediaPlayer.create(this,R.raw.birds);
-        sk=findViewById(R.id.seek);
-        seek=findViewById(R.id.seek2);
-        am=(AudioManager) getSystemService(AUDIO_SERVICE);
+        am=(AudioManager) getSystemService(AUDIO_SERVICE);//FOR CONTROLLING AUDIO
+
+        //SETTING SEEK VALUES
         int max=am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         int cur=am.getStreamVolume(AudioManager.STREAM_MUSIC);
         sk.setMax(max);
         sk.setProgress(cur);
-        seek.setOnSeekBarChangeListener(this);
         seek.setMax(mp.getDuration());
+        //SEEK CURRENT IS SET USING TIMER
+
+//SEEK LISTENERS
+        seek.setOnSeekBarChangeListener(this);
+        //SEEKING VOLUME
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -107,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    //BUTTONS ACTIONS
     @Override
     public void onClick(View bview) {
 
