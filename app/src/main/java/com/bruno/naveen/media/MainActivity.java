@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int max1;
     private Timer timer;
 
-    //FOR CLOSINF TIMER(WHICH IS HEAVY)
+    //FOR CLOSING TIMER(WHICH IS HEAVY)
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
        timer.cancel();
